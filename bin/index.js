@@ -3,10 +3,22 @@
 const { program } = require('commander');
 const { showVersion } = require('../lib/version');
 const pkg = require('../package.json');
-
+const yargsParser = require('yargs-parser');
 // 检查是否是版本参数
-const args = process.argv.slice(2);
-if (args.includes('-v') || args.includes('--version')) {
+// const args = process.argv.slice(2);
+// if (args.includes('-v') || args.includes('--version')) {
+//   showVersion();
+//   process.exit(0);
+// }
+const argv = yargsParser(process.argv.slice(2), {
+  alias: {
+    v: 'version',
+    h: 'help'
+  },
+  boolean: ['version', 'help']
+});
+// 检查版本参数
+if (argv.version) {
   showVersion();
   process.exit(0);
 }
